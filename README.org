@@ -65,6 +65,132 @@ License: Code is licensed under [[https://www.dennyzhang.com/wp-content/mit_lice
 #+SEQ_TODO: TODO HALF ASSIGN | DONE BYPASS DELEGATE CANCELED DEFERRED
 #+LINK_UP:   
 #+LINK_HOME: 
+* TODO cloudshell                                                  :noexport:
+** curl -sS https://get.k8s.io | bash error
+#+BEGIN_EXAMPLE
+denny_zhang001@cloudshell:~/kubernetes (denny-k8s-test1)$ curl -sS https://get.k8s.io | bash
+'kubernetes' directory already exist. Should we skip download step and start to create cluster based on it? [Y]/n
+Skipping download step.
+Creating a kubernetes on gce...
+... Starting cluster in us-central1-b using provider gce
+... calling verify-prereqs
+... calling verify-kube-binaries
+... calling verify-release-tars
+... calling kube-up
+Project: denny-k8s-test1
+Network Project: denny-k8s-test1
+Zone: us-central1-b
+BucketNotFoundException: 404 gs://kubernetes-staging-8e7ceb888c bucket does not exist.
+Creating gs://kubernetes-staging-8e7ceb888c
+Creating gs://kubernetes-staging-8e7ceb888c/...
++++ Staging server tars to Google Storage: gs://kubernetes-staging-8e7ceb888c/kubernetes-devel
++++ kubernetes-server-linux-amd64.tar.gz uploaded (sha1 = 2f4bb5e579f038d4f71ab88a68653dd64dacb924)
++++ kubernetes-manifests.tar.gz uploaded (sha1 = b2be17f08cff1c712e6ebcd454073491e83def6e)
+INSTANCE_GROUPS=
+NODE_NAMES=
+Looking for already existing resources
+Found existing network default in AUTO mode.
+Creating firewall...
+.Creating firewall...
+.IP aliases are disabled.
+..Creating firewall...
+..Found subnet for region us-central1 in network default: default
+Starting master and configuring firewalls
+...Creating firewall...
+...................Created [https://www.googleapis.com/compute/v1/projects/denny-k8s-test1/zones/us-central1-b/disks/kubernetes-master-pd].
+NAME                  ZONE           SIZE_GB  TYPE    STATUS
+kubernetes-master-pd  us-central1-b  20       pd-ssd  READY
+
+New disks are unformatted. You must format and mount a disk before it
+can be used. You can find instructions on how to do this at:
+
+https://cloud.google.com/compute/docs/disks/add-persistent-disk#formatting
+
+....Created [https://www.googleapis.com/compute/v1/projects/denny-k8s-test1/global/firewalls/kubernetes-default-internal-master].
+done.
+...NAME                                NETWORK  DIRECTION  PRIORITY  ALLOW                                       DENY
+kubernetes-default-internal-master  default  INGRESS    1000      tcp:1-2379,tcp:2382-65535,udp:1-65535,icmp
+...Created [https://www.googleapis.com/compute/v1/projects/denny-k8s-test1/global/firewalls/kubernetes-default-internal-node].
+done.
+..NAME                              NETWORK  DIRECTION  PRIORITY  ALLOW                         DENY
+kubernetes-default-internal-node  default  INGRESS    1000      tcp:1-65535,udp:1-65535,icmp
+Creating firewall...
+.........Created [https://www.googleapis.com/compute/v1/projects/denny-k8s-test1/global/firewalls/kubernetes-master-https].
+done.
+.NAME                     NETWORK  DIRECTION  PRIORITY  ALLOW    DENY
+kubernetes-master-https  default  INGRESS    1000      tcp:443
+.....Created [https://www.googleapis.com/compute/v1/projects/denny-k8s-test1/global/firewalls/default-default-ssh].
+.done.
+.Created [https://www.googleapis.com/compute/v1/projects/denny-k8s-test1/regions/us-central1/addresses/kubernetes-master-ip].
+NAME                 NETWORK  DIRECTION  PRIORITY  ALLOW   DENY
+default-default-ssh  default  INGRESS    1000      tcp:22
+....Created [https://www.googleapis.com/compute/v1/projects/denny-k8s-test1/global/firewalls/kubernetes-master-etcd].
+Generating certs for alternate-names: IP:35.202.25.117,IP:10.0.0.1,DNS:kubernetes,DNS:kubernetes.default,DNS:kubernetes.default.svc,DNS:kubernetes.default.svc.cluster.local,DNS:kubernetes-master
+done.
+NAME                    NETWORK  DIRECTION  PRIORITY  ALLOW              DENY
+kubernetes-master-etcd  default  INGRESS    1000      tcp:2380,tcp:2381
+Unable to successfully run 'cfssl' from /home/denny_zhang001/gopath/bin:/google/gopath/bin:/google/google-cloud-sdk/bin:/usr/local/go/bin:/opt/gradle/bin:/opt/maven/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/nvm/versions/node/v8.9.4/bin:/google/go_appengine:/google/google_appengine; downloading instead...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  9.8M  100  9.8M    0     0  21.6M      0 --:--:-- --:--:-- --:--:-- 21.6M
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 2224k  100 2224k    0     0  5913k      0 --:--:-- --:--:-- --:--:-- 5900k
+2018/09/01 21:44:46 [INFO] generating a new CA key and certificate from CSR
+2018/09/01 21:44:46 [INFO] generate received request
+2018/09/01 21:44:46 [INFO] received CSR
+2018/09/01 21:44:46 [INFO] generating key: ecdsa-256
+2018/09/01 21:44:46 [INFO] encoded CSR
+2018/09/01 21:44:46 [INFO] signed certificate with serial number 706141843357032989988605479444757188691606705372
+Generate peer certificates...
+2018/09/01 21:44:46 [INFO] generate received request
+2018/09/01 21:44:46 [INFO] received CSR
+2018/09/01 21:44:46 [INFO] generating key: ecdsa-256
+2018/09/01 21:44:46 [INFO] encoded CSR
+2018/09/01 21:44:46 [INFO] signed certificate with serial number 276176297632265353784428191039168220001881808756
++++ Logging using Fluentd to gcp
+./cluster/../cluster/../cluster/gce/util.sh: line 964: CUSTOM_KUBE_DASHBOARD_BANNER: unbound variable
+Creating firewall...
+...........Created [https://www.googleapis.com/compute/v1/projects/denny-k8s-test1/global/firewalls/kubernetes-minion-all].
+done.
+NAME                   NETWORK  DIRECTION  PRIORITY  ALLOW                     DENY
+kubernetes-minion-all  default  INGRESS    1000      tcp,udp,icmp,esp,ah,sctp
+WARNING: You have selected a disk size of under [200GB]. This may result in poor I/O performance. For more information, see: https://developers.google.com/compute/docs/disks#performance.
+Created [https://www.googleapis.com/compute/v1/projects/denny-k8s-test1/zones/us-central1-b/instances/kubernetes-master].
+WARNING: Some requests generated warnings:
+ - The resource 'projects/cos-cloud/global/images/cos-stable-65-10323-64-0' is deprecated. A suggested replacement is 'projects/cos-cloud/global/images/cos-stable-65-10323-69-0'.
+
+NAME               ZONE           MACHINE_TYPE   PREEMPTIBLE  INTERNAL_IP  EXTERNAL_IP    STATUS
+kubernetes-master  us-central1-b  n1-standard-1               10.128.0.2   35.202.25.117  RUNNING
+Creating nodes.
+./cluster/../cluster/../cluster/gce/util.sh: line 964: CUSTOM_KUBE_DASHBOARD_BANNER: unbound variable
+Using subnet default
+Attempt 1 to create kubernetes-minion-template
+WARNING: You have selected a disk size of under [200GB]. This may result in poor I/O performance. For more information, see: https://developers.google.com/compute/docs/disks#performance.
+Created [https://www.googleapis.com/compute/v1/projects/denny-k8s-test1/global/instanceTemplates/kubernetes-minion-template].
+NAME                        MACHINE_TYPE   PREEMPTIBLE  CREATION_TIMESTAMP
+kubernetes-minion-template  n1-standard-2               2018-09-01T21:45:06.162-07:00
+Created [https://www.googleapis.com/compute/v1/projects/denny-k8s-test1/zones/us-central1-b/instanceGroupManagers/kubernetes-minion-group].
+NAME                     LOCATION       SCOPE  BASE_INSTANCE_NAME       SIZE  TARGET_SIZE  INSTANCE_TEMPLATE           AUTOSCALED
+kubernetes-minion-group  us-central1-b  zone   kubernetes-minion-group  0     3            kubernetes-minion-template  no
+Group is stable
+INSTANCE_GROUPS=kubernetes-minion-group
+NODE_NAMES=kubernetes-minion-group-d313 kubernetes-minion-group-jt59 kubernetes-minion-group-k3rq
+Trying to find master named 'kubernetes-master'
+Looking for address 'kubernetes-master-ip'
+Using master: kubernetes-master (external IP: 35.202.25.117)
+Waiting up to 300 seconds for cluster initialization.
+
+  This will continually check to see if the API for kubernetes is reachable.
+  This may time out if there was some uncaught error during start up.
+
+........................................................................................................................................Cluster failed to initialize within 300 seconds.
+Last output from querying API server follows:
+-----------------------------------------------------
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (7) Failed to connect to 35.202.25.117 port 443: Connection refused
+#+END_EXAMPLE
 * setup gke manually                                               :noexport:
 ** kube-up.sh error
 #+BEGIN_EXAMPLE
@@ -79,3 +205,4 @@ Can't determine Kubernetes release.
 /home/denny_zhang001/kubernetes/cluster/get-kube-binaries.sh should only be run from a prebuilt Kubernetes release.
 Did you mean to use get-kube.sh instead?
 #+END_EXAMPLE
+* TODO How to clean up everything inside one project?              :noexport:
