@@ -23,28 +23,87 @@
 File me [[https://github.com/dennyzhang/cheatsheet-docker-A4/issues][Issues]] or star [[https://github.com/DennyZhang/cheatsheet-docker-A4][this repo]].
 
 See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][#denny-cheatsheets]]
-** gcloud
-*** Project
-| Name           | Summary                                  |
-|----------------+------------------------------------------|
-| List projects  | =gcloud config list project=             |
-| Switch project | =gcloud config set project <project-id>= |
-*** Auth
-| Name                | Summary                                                        |
-|---------------------+----------------------------------------------------------------|
-| Authenticate client | =gcloud auth <activate-service-account> --key-file <key-file>= |
+** GCP Basic
+| Name                | Summary                                  |
+|---------------------+------------------------------------------|
+| Init profile        | =gcloud init=                            |
+| List projects       | =gcloud config list project=             |
+| Show project info   | =gcloud compute project-info describe=   |
+| Switch project      | =gcloud config set project <project-id>= |
+| List all zones      | =gcloud compute zones list=              |
+| Show your SDK setup | =gcloud info=                            |
 
-** gsutil
-| Name            | Summary                                                                    |
-|-----------------+----------------------------------------------------------------------------|
-| Config auth     | =gsutil config -a=                                                         |
-| Download bucket | =gsutil <path-to-release> gs://<bucket_name>/=                             |
-| Download file   | =gsutil cp  gs://<bucket_name>/<dir-path>/package-1.1.tgz package-1.1.tgz= |
+** VM
+| Name               | Summary                                                                                                   |
+|--------------------+-----------------------------------------------------------------------------------------------------------|
+| List all instances | =gcloud compute instances list=                                                                           |
+| Stop an instance   | =gcloud compute instances stop instance-2=                                                                |
+| Start an instance  | =gcloud compute instances start instance-2=                                                               |
+| Create an instance | =gcloud compute instances create vm1 --image image-1 --tags test --zone "<zone>" --machine-type f1-micro= |
+| Show instance info | =gcloud compute --project "<project-name>" instances describe "<instance-name>" --zone "<zone>"=          |
+| SSH to instance    | =gcloud compute --project "<project-name>" ssh --zone "<zone-name>" "<instance-name>"=                    |
+
+** Bucket Basic
+| Name                          | Summary                                                                   |
+|-------------------------------+---------------------------------------------------------------------------|
+| List all buckets and files    | =gsutil ls=, =gsutil ls -lh gs://<bucket-name>=                           |
+| Download file                 | =gsutil cp gs://<bucket-name>/<dir-path>/package-1.1.tgz .=               |
+| Upload file                   | =gsutil cp <filename> gs://<bucket-name>/<directory>/=                    |
+| Move file                     | =gsutil mv <src-filepath> gs://<bucket-name>/<directory>/<dest-filepath>= |
+| Cat file                      | =gsutil cat gs://<bucket-name>/<filepath>/=                               |
+| Delete file                   | =gsutil rm gs://<bucket-name>/<filepath>=                                 |
+| Show disk usage               | =gsutil du -h gs://<bucket-name/<directory>=                              |
+| Caculate file sha1sum         | =shasum syslog-migration-10.0.2.tgz=                                      |
+| Gsutil help                   | =gsutil help=, =gsutil help cp=, =gsutil help options=                    |
+| Create bucket                 | =gsutil mb gs://<bucket-name>=                                            |
+| Copy a whole folder to bucket | =gsutil cp -r ./conf gs://<bucket-name>/=                                 |
+
+[[https://cloud.google.com/storage/docs/quickstart-gsutil][link: Quickstart: Using the gsutil Tool]]
+** Bucket Security
+| Name                    | Summary                                                                                   |
+|-------------------------+-------------------------------------------------------------------------------------------|
+| Make all files readable | =gsutil -m acl set -R -a public-read gs://<bucket-name>/=                                 |
+| Config auth             | =gsutil config -a=                                                                        |
+| Grant bucket access     | =gsutil iam ch user:denny@gmail.com:objectCreator,objectViewer gs://my-awesome-bucket=    |
+| Remove bucket access    | =gsutil iam ch -d user:denny@gmail.com:objectCreator,objectViewer gs://my-awesome-bucket= |
+
+** Network
+| Name                       | Summary                                                         |
+|----------------------------+-----------------------------------------------------------------|
+| List all networks          | =gcloud compute networks list=                                  |
+| Show one network's details | =gcloud compute networks describe <network-name> --format json= |
+
+** Firewall
+| Name                       | Summary                                                                                    |
+|----------------------------+--------------------------------------------------------------------------------------------|
+| List all firewall rules    | =gcloud compute firewall-rules list=                                                       |
+| List all forwarding rules  | =gcloud compute forwarding-rules list=                                                     |
+| Describe one firewall rule | =gcloud compute firewall-rules describe <rule-name>=                                       |
+| Create one firewall rule   | =gcloud compute firewall-rules create my-rule --network default --allow tcp:9200 tcp:3306= |
+| Update one firewall rule   | =gcloud compute firewall-rules update default --network default --allow tcp:9200 tcp:9300=                                                                                         |
+
+** Volumes
+| Name            | Summary                                                                      |
+|-----------------+------------------------------------------------------------------------------|
+| Create snapshot | =gcloud compute disks snapshot <diskname> --snapshotname <name1> --zone $ZONE= |
+
+** IAM
+| Name                                    | Summary                                                        |
+|-----------------------------------------+----------------------------------------------------------------|
+| Authenticate client                     | =gcloud auth <activate-service-account> --key-file <key-file>= |
+| Display a list of credentialed accounts | =gcloud auth list=                                             |
+
+** Images
+| Name            | Summary                      |
+|-----------------+------------------------------|
+| List all images | =gcloud compute images list= |
 
 ** cloudshell
 
 ** More Resources
+[[https://gist.github.com/kelseyhightower/61ce324db5639f95c77c686cc0d11fa5][kelseyhightower gist: create-global-lb.sh]]
 
+[[https://gist.github.com/mingderwang/12b399100cdfad039f5e][mingderwang gist: gistfile1.txt]]
 License: Code is licensed under [[https://www.dennyzhang.com/wp-content/mit_license.txt][MIT License]].
 #+BEGIN_HTML
 <a href="https://www.dennyzhang.com"><img align="right" width="201" height="268" src="https://raw.githubusercontent.com/USDevOps/mywechat-slack-group/master/images/denny_201706.png"></a>
@@ -220,3 +279,107 @@ Can't determine Kubernetes release.
 Did you mean to use get-kube.sh instead?
 #+END_EXAMPLE
 * TODO How to clean up everything inside one project?              :noexport:
+* DONE gcloud init                                                 :noexport:
+  CLOSED: [2018-09-07 Fri 11:13]
+https://cloud.google.com/sdk/docs/quickstart-macos
+#+BEGIN_EXAMPLE
+  /Users/zdenny/Downloads/google-cloud-sdk  ./install.sh                                                                                     ✘ 127
+Welcome to the Google Cloud SDK!
+
+To help improve the quality of this product, we collect anonymized usage data
+and anonymized stacktraces when crashes are encountered; additional information
+is available at <https://cloud.google.com/sdk/usage-statistics>. You may choose
+to opt out of this collection now (by choosing 'N' at the below prompt), or at
+any time in the future by running the following command:
+
+    gcloud config set disable_usage_reporting true
+
+Do you want to help improve the Google Cloud SDK (Y/n)?  n
+
+
+Your current Cloud SDK version is: 210.0.0
+The latest available version is: 210.0.0
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                                  Components                                                 │
+├───────────────┬──────────────────────────────────────────────────────┬──────────────────────────┬───────────┤
+│     Status    │                         Name                         │            ID            │    Size   │
+├───────────────┼──────────────────────────────────────────────────────┼──────────────────────────┼───────────┤
+│ Not Installed │ App Engine Go Extensions                             │ app-engine-go            │ 152.8 MiB │
+│ Not Installed │ Cloud Bigtable Command Line Tool                     │ cbt                      │   4.8 MiB │
+│ Not Installed │ Cloud Bigtable Emulator                              │ bigtable                 │   4.3 MiB │
+│ Not Installed │ Cloud Datalab Command Line Tool                      │ datalab                  │   < 1 MiB │
+│ Not Installed │ Cloud Datastore Emulator                             │ cloud-datastore-emulator │  17.4 MiB │
+│ Not Installed │ Cloud Datastore Emulator (Legacy)                    │ gcd-emulator             │  38.1 MiB │
+│ Not Installed │ Cloud Pub/Sub Emulator                               │ pubsub-emulator          │  33.4 MiB │
+│ Not Installed │ Cloud SQL Proxy                                      │ cloud_sql_proxy          │   2.5 MiB │
+│ Not Installed │ Emulator Reverse Proxy                               │ emulator-reverse-proxy   │  14.5 MiB │
+│ Not Installed │ Google Cloud Build Local Builder                     │ cloud-build-local        │   4.4 MiB │
+│ Not Installed │ Google Container Local Builder                       │ container-builder-local  │   4.4 MiB │
+│ Not Installed │ Google Container Registry's Docker credential helper │ docker-credential-gcr    │   1.8 MiB │
+│ Not Installed │ gcloud Alpha Commands                                │ alpha                    │   < 1 MiB │
+│ Not Installed │ gcloud Beta Commands                                 │ beta                     │   < 1 MiB │
+│ Not Installed │ gcloud app Java Extensions                           │ app-engine-java          │ 118.6 MiB │
+│ Not Installed │ gcloud app PHP Extensions                            │ app-engine-php           │  21.9 MiB │
+│ Not Installed │ gcloud app Python Extensions                         │ app-engine-python        │   6.1 MiB │
+│ Not Installed │ gcloud app Python Extensions (Extra Libraries)       │ app-engine-python-extras │  28.5 MiB │
+│ Not Installed │ kubectl                                              │ kubectl                  │  14.8 MiB │
+│ Installed     │ BigQuery Command Line Tool                           │ bq                       │   < 1 MiB │
+│ Installed     │ Cloud SDK Core Libraries                             │ core                     │   8.2 MiB │
+│ Installed     │ Cloud Storage Command Line Tool                      │ gsutil                   │   3.5 MiB │
+└───────────────┴──────────────────────────────────────────────────────┴──────────────────────────┴───────────┘
+To install or remove components at your current SDK version [210.0.0], run:
+  $ gcloud components install COMPONENT_ID
+  $ gcloud components remove COMPONENT_ID
+
+To update your SDK installation to the latest version [210.0.0], run:
+  $ gcloud components update
+
+
+Modify profile to update your $PATH and enable shell command
+completion?
+
+Do you want to continue (Y/n)?
+#+END_EXAMPLE
+
+* gsutil parallel upload                                           :noexport:
+#+BEGIN_EXAMPLE
+
+   /Users/zdenny  gsutil cp wavefront-proxy-0.8.0.tgz gs://pks-releng-final-releases/wavefront-proxy-0.8.0.tgz                                                                                                                                                       ✔ 0
+Copying file://wavefront-proxy-0.8.0.tgz [Content-Type=application/x-tar]...
+==> NOTE: You are uploading one or more large file(s), which would run
+significantly faster if you enable parallel composite uploads. This
+feature can be enabled by editing the
+"parallel_composite_upload_threshold" value in your .boto
+configuration file. However, note that if you do this large files will
+be uploaded as `composite objects
+<https://cloud.google.com/storage/docs/composite-objects>`_,which
+means that any user who downloads such objects will need to have a
+compiled crcmod installed (see "gsutil help crcmod"). This is because
+without a compiled crcmod, computing checksums on composite objects is
+so slow that gsutil disables downloads of composite objects.
+
+/ [0 files][187.2 MiB/492.4 MiB]   11.2 MiB/s
+#+END_EXAMPLE
+* gcloud preview docker push  gcr.io/iron_potion_92209/mingderwang_mediawalker2_karaf :noexport:
+https://gist.github.com/mingderwang/12b399100cdfad039f5e
+* gke command                                                      :noexport:
+https://gist.github.com/mingderwang/12b399100cdfad039f5e
+
+9959  gcloud alpha container kubectl create -f wordpress.json
+ 9960  gcloud config set compute/zone us-central1-a
+ 9961  gcloud alpha container kubectl create -f wordpress.json
+ 9962  gcloud config set compute/cluster cluster-rethinkdb
+ 9963  gcloud alpha container clusters create hello-world \\
+ 9966  gcloud alpha container kubectl get pod
+ 9967  gcloud alpha container kubectl get pod wordpress
+ 9968  gcloud alpha container kubectl get pod
+ 9969  gcloud compute firewall-rules create hello-world-node-80 --allow tcp:80 \\
+ 9971  gcloud alpha container kubectl get se
+ 9972  gcloud alpha container kubectl get rc
+ 9976  gcloud components update gae-go
+ 9977  gcloud alpha container kubectl get pod wordpress
+ 9978  gcloud alpha container kubectl get po
+ 9979  gcloud alpha container kubectl create -f wordpress.json
+ 9982  gcloud alpha container kubectl create -f wordpress.json
+ 9983  gcloud alpha container kubectl get po
