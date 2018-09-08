@@ -26,14 +26,39 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 ** GCP Basic
 | Name                     | Summary                                                   |
 |--------------------------+-----------------------------------------------------------|
-| Official Doc             | [[https://cloud.google.com/sdk/gcloud/reference/][link: gcloud reference]]                                    |
+| Official Doc             | [[https://cloud.google.com/sdk/gcloud/reference/][link: gcloud reference]], [[https://cloud.google.com/storage/docs/gsutil][link: gsutil tool]]                 |
 | Check version & settings | =gcloud version=, =gcloud info=, =gcloud components list= |
-| Init profile             | gcloud init = This might ask you to open a URL        |
+| Init profile             | =gcloud init= This might ask you to open a URL            |
 | List projects            | =gcloud config list=, =gcloud config list project=        |
 | Show project info        | =gcloud compute project-info describe=                    |
 | Switch project           | =gcloud config set project <project-id>=                  |
 | List all zones           | =gcloud compute zones list=                               |
 #+TBLFM: $2=gcloud init= This might need you to open URL
+
+** Bucket Basic
+| Name                       | Summary                                                                   |
+|----------------------------+---------------------------------------------------------------------------|
+| List all buckets and files | =gsutil ls=, =gsutil ls -lh gs://<bucket-name>=                           |
+| Download file              | =gsutil cp gs://<bucket-name>/<dir-path>/package-1.1.tgz .=               |
+| Upload file                | =gsutil cp <filename> gs://<bucket-name>/<directory>/=                    |
+| Cat file                   | =gsutil cat gs://<bucket-name>/<filepath>/=                               |
+| Delete file                | =gsutil rm gs://<bucket-name>/<filepath>=                                 |
+| Move file                  | =gsutil mv <src-filepath> gs://<bucket-name>/<directory>/<dest-filepath>= |
+| Copy folder                | =gsutil cp -r ./conf gs://<bucket-name>/=                                 |
+| Show disk usage            | =gsutil du -h gs://<bucket-name/<directory>=                              |
+| Caculate file sha1sum      | =shasum syslog-migration-10.0.2.tgz=                                      |
+| Create bucket              | =gsutil mb gs://<bucket-name>=                                            |
+| Gsutil help                | =gsutil help=, =gsutil help cp=, =gsutil help options=                    |
+
+[[https://cloud.google.com/storage/docs/quickstart-gsutil][link: Quickstart: Using the gsutil Tool]]
+
+** Bucket Security
+| Name                    | Summary                                                                               |
+|-------------------------+---------------------------------------------------------------------------------------|
+| Make all files readable | =gsutil -m acl set -R -a public-read gs://<bucket-name>/=                             |
+| Config auth             | =gsutil config -a=                                                                    |
+| Grant bucket access     | =gsutil iam ch user:denny@gmail.com:objectCreator,objectViewer gs://<bucket-name>=    |
+| Remove bucket access    | =gsutil iam ch -d user:denny@gmail.com:objectCreator,objectViewer gs://<bucket-name>= |
 
 ** VM
 | Name               | Summary                                                                                                   |
@@ -42,35 +67,10 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | Stop an instance   | =gcloud compute instances stop instance-2=                                                                |
 | Start an instance  | =gcloud compute instances start instance-2=                                                               |
 | Create an instance | =gcloud compute instances create vm1 --image image-1 --tags test --zone "<zone>" --machine-type f1-micro= |
-| Show instance info | =gcloud compute --project "<project-name>" instances describe "<instance-name>" --zone "us-west2-a"=      |
-| SSH to instance    | =gcloud compute --project "<project-name>" ssh --zone "<zone-name>" "<instance-name>"=                    |
+| Show instance info | =gcloud compute instances describe "<instance-name>" --project "<project-name>" --zone "us-west2-a"=      |
+| SSH to instance    | =gcloud compute ssh --project "<project-name>" --zone "<zone-name>" "<instance-name>"=                    |
 | Download files     | =gcloud compute copy-files example-instance:~/REMOTE-DIR ~/LOCAL-DIR --zone us-central1-a=                |
 | Upload files       | =gcloud compute copy-files ~/LOCAL-FILE-1 example-instance:~/REMOTE-DIR --zone us-central1-a=             |
-
-** Bucket Basic
-| Name                          | Summary                                                                   |
-|-------------------------------+---------------------------------------------------------------------------|
-| List all buckets and files    | =gsutil ls=, =gsutil ls -lh gs://<bucket-name>=                           |
-| Download file                 | =gsutil cp gs://<bucket-name>/<dir-path>/package-1.1.tgz .=               |
-| Upload file                   | =gsutil cp <filename> gs://<bucket-name>/<directory>/=                    |
-| Cat file                      | =gsutil cat gs://<bucket-name>/<filepath>/=                               |
-| Delete file                   | =gsutil rm gs://<bucket-name>/<filepath>=                                 |
-| Move file                     | =gsutil mv <src-filepath> gs://<bucket-name>/<directory>/<dest-filepath>= |
-| Copy a whole folder to bucket | =gsutil cp -r ./conf gs://<bucket-name>/=                                 |
-| Show disk usage               | =gsutil du -h gs://<bucket-name/<directory>=                              |
-| Caculate file sha1sum         | =shasum syslog-migration-10.0.2.tgz=                                      |
-| Create bucket                 | =gsutil mb gs://<bucket-name>=                                            |
-| Gsutil help                   | =gsutil help=, =gsutil help cp=, =gsutil help options=                    |
-
-[[https://cloud.google.com/storage/docs/quickstart-gsutil][link: Quickstart: Using the gsutil Tool]]
-
-** Bucket Security
-| Name                    | Summary                                                                                   |
-|-------------------------+-------------------------------------------------------------------------------------------|
-| Make all files readable | =gsutil -m acl set -R -a public-read gs://<bucket-name>/=                                 |
-| Config auth             | =gsutil config -a=                                                                        |
-| Grant bucket access     | =gsutil iam ch user:denny@gmail.com:objectCreator,objectViewer gs://my-awesome-bucket=    |
-| Remove bucket access    | =gsutil iam ch -d user:denny@gmail.com:objectCreator,objectViewer gs://my-awesome-bucket= |
 
 ** Disks & Volumes
 | Name                | Summary                                                                        |
@@ -81,16 +81,16 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | Create snapshot     | =gcloud compute disks snapshot <diskname> --snapshotname <name1> --zone $zone= |
 
 ** Network
-| Name                       | Summary                                                                             |
-|----------------------------+-------------------------------------------------------------------------------------|
-| List all networks          | =gcloud compute networks list=                                                      |
-| Show one network's details | =gcloud compute networks describe <network-name> --format json=                     |
-| Create network             | =gcloud compute networks create <network-name>=                                     |
-| Create subnet              | =gcloud compute networks subnets create subnet1 --network net1 --range 10.5.4.0/24= |
-| Get a static ip            | =gcloud compute addresses create --region us-west2-a vpn-1-static-ip=               |
-| List all ip addresses      | =gcloud compute addresses list=                                                     |
-| Describe ip address        | =gcloud compute addresses describe <ip-name> --region us-central1=                  |
-| List all routes            | =gcloud compute routes list=                                                        |
+| Name                  | Summary                                                                             |
+|-----------------------+-------------------------------------------------------------------------------------|
+| List all networks     | =gcloud compute networks list=                                                      |
+| Detail of one network | =gcloud compute networks describe <network-name> --format json=                     |
+| Create network        | =gcloud compute networks create <network-name>=                                     |
+| Create subnet         | =gcloud compute networks subnets create subnet1 --network net1 --range 10.5.4.0/24= |
+| Get a static ip       | =gcloud compute addresses create --region us-west2-a vpn-1-static-ip=               |
+| List all ip addresses | =gcloud compute addresses list=                                                     |
+| Describe ip address   | =gcloud compute addresses describe <ip-name> --region us-central1=                  |
+| List all routes       | =gcloud compute routes list=                                                        |
 
 [[https://gist.github.com/aleccunningham/670115b2573be699b629954852b6598f][aleccunningham gist: vpn-setup.sh]]
 
@@ -109,13 +109,6 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | Create one firewall rule   | =gcloud compute firewall-rules create my-rule --network default --allow tcp:9200 tcp:3306= |
 | Update one firewall rule   | =gcloud compute firewall-rules update default --network default --allow tcp:9200 tcp:9300= |
 
-** Services
-| Name                               | Summary                                  |
-|------------------------------------+------------------------------------------|
-| List my backend services           | =gcloud compute backend-services list=   |
-| List all my health check endpoints | =gcloud compute http-health-checks list= |
-| List all URL maps                  | =gcloud compute url-maps list=           |
-
 ** RDS
 | Name                   | Summary                     |
 |------------------------+-----------------------------|
@@ -133,6 +126,13 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | Name            | Summary                      |
 |-----------------+------------------------------|
 | List all images | =gcloud compute images list= |
+
+** Services
+| Name                               | Summary                                  |
+|------------------------------------+------------------------------------------|
+| List my backend services           | =gcloud compute backend-services list=   |
+| List all my health check endpoints | =gcloud compute http-health-checks list= |
+| List all URL maps                  | =gcloud compute url-maps list=           |
 
 ** cloudshell
 
