@@ -27,7 +27,7 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 |--------------------------+-----------------------------------------------------------|
 | Official Doc             | [[https://cloud.google.com/sdk/gcloud/reference/][link: gcloud reference]], [[https://cloud.google.com/storage/docs/gsutil][link: gsutil tool]]                 |
 | Check version & settings | =gcloud version=, =gcloud info=, =gcloud components list= |
-| Init profile             | =gcloud init= This might ask you to open a URL            |
+| Init profile             | =gcloud init= This might ask you to open an OpenID URL    |
 | List projects            | =gcloud config list=, =gcloud config list project=        |
 | Show project info        | =gcloud compute project-info describe=                    |
 | Switch project           | =gcloud config set project <project-id>=                  |
