@@ -28,12 +28,32 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | Official Doc             | [[https://cloud.google.com/sdk/gcloud/reference/][link: gcloud reference]], [[https://cloud.google.com/storage/docs/gsutil][link: gsutil tool]]                 |
 | Check version & settings | =gcloud version=, =gcloud info=, =gcloud components list= |
 | Init profile             | =gcloud init= This might ask you to open an OpenID URL    |
-| List projects            | =gcloud config list=, =gcloud config list project=        |
-| Show project info        | =gcloud compute project-info describe=                    |
-| Switch project           | =gcloud config set project <project-id>=                  |
 | List all zones           | =gcloud compute zones list=                               |
 #+TBLFM: $2=gcloud init= This might need you to open URL
 
+** GCP Project
+| Name              | Summary                                            |
+|-------------------+----------------------------------------------------|
+| List projects     | =gcloud config list=, =gcloud config list project= |
+| Show project info | =gcloud compute project-info describe=             |
+| Switch project    | =gcloud config set project <project-id>=           |
+
+** GKE
+| Name                | Summary                                                    |
+|---------------------+------------------------------------------------------------|
+| Set kubectl context | =gcloud container clusters get-credentials <cluster-name>= |
+| Change region       | =gcloud config set compute/region us-west=                 |
+| Change zone         | =gcloud config set compute/zone us-west1-b=                |
+
+** IAM
+| Name                                    | Summary                                                             |
+|-----------------------------------------+---------------------------------------------------------------------|
+| Authenticate client                     | =gcloud auth activate-service-account --key-file <key-file>=        |
+| Display a list of credentialed accounts | =gcloud auth list=                                                  |
+| Set the active account                  | =gcloud config set account <ACCOUNT>=                               |
+| Print token for active account          | =gcloud auth print-access-token=, =gcloud auth print-refresh-token= |
+| Revoke previous generated credential    | =gcloud auth <application-default> revoke=                          |
+  
 ** Bucket Basic
 | Name                       | Summary                                                                   |
 |----------------------------+---------------------------------------------------------------------------|
@@ -63,10 +83,10 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | Name               | Summary                                                                                                   |
 |--------------------+-----------------------------------------------------------------------------------------------------------|
 | List all instances | =gcloud compute instances list=, =gcloud compute instance-templates list=                                 |
+| Show instance info | =gcloud compute instances describe "<instance-name>" --project "<project-name>" --zone "us-west2-a"=      |
 | Stop an instance   | =gcloud compute instances stop instance-2=                                                                |
 | Start an instance  | =gcloud compute instances start instance-2=                                                               |
 | Create an instance | =gcloud compute instances create vm1 --image image-1 --tags test --zone "<zone>" --machine-type f1-micro= |
-| Show instance info | =gcloud compute instances describe "<instance-name>" --project "<project-name>" --zone "us-west2-a"=      |
 | SSH to instance    | =gcloud compute ssh --project "<project-name>" --zone "<zone-name>" "<instance-name>"=                    |
 | Download files     | =gcloud compute copy-files example-instance:~/REMOTE-DIR ~/LOCAL-DIR --zone us-central1-a=                |
 | Upload files       | =gcloud compute copy-files ~/LOCAL-FILE-1 example-instance:~/REMOTE-DIR --zone us-central1-a=             |
@@ -112,14 +132,6 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | Name                   | Summary                     |
 |------------------------+-----------------------------|
 | List all sql instances | =gcloud sql instances list= |
-
-** IAM
-| Name                                    | Summary                                                             |
-|-----------------------------------------+---------------------------------------------------------------------|
-| Authenticate client                     | =gcloud auth <activate-service-account> --key-file <key-file>=      |
-| Display a list of credentialed accounts | =gcloud auth list=                                                  |
-| Print token for active account          | =gcloud auth print-access-token=, =gcloud auth print-refresh-token= |
-| Revoke previous generated credential    | =gcloud auth <application-default> revoke=                          |
 
 ** Images
 | Name            | Summary                      |
