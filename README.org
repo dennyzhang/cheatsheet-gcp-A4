@@ -23,28 +23,28 @@ File me [[https://github.com/dennyzhang/cheatsheet-docker-A4/issues][Issues]] or
 
 See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][#denny-cheatsheets]]
 ** GCP Basic
-| Name                     | Summary                                                   |
-|--------------------------+-----------------------------------------------------------|
-| Official Doc             | [[https://cloud.google.com/sdk/gcloud/reference/][link: gcloud reference]], [[https://cloud.google.com/storage/docs/gsutil][link: gsutil tool]]                 |
-| Check version & settings | =gcloud version=, =gcloud info=, =gcloud components list= |
-| Init profile             | =gcloud init= This might ask you to open an OpenID URL    |
-| List all zones           | =gcloud compute zones list=                               |
-#+TBLFM: $2=gcloud init= This might need you to open URL
-
+| Name                     | Summary                                                                  |
+|--------------------------+--------------------------------------------------------------------------|
+| Official Doc             | [[https://cloud.google.com/sdk/gcloud/reference/][link: gcloud reference]], [[https://cloud.google.com/storage/docs/gsutil][link: gsutil tool]]                                |
+| Check version & settings | =gcloud version=, =gcloud info=, =gcloud components list=                |
+| Init profile             | =gcloud init= This might ask you to open an OpenID URL                   |
+| List all zones           | =gcloud compute zones list=                                              |
+| Upgrade local SDK        | =gcloud components update=, =gcloud components update --version 219.0.1= |
 ** GCP Project
 | Name              | Summary                                            |
 |-------------------+----------------------------------------------------|
 | List projects     | =gcloud config list=, =gcloud config list project= |
 | Show project info | =gcloud compute project-info describe=             |
 | Switch project    | =gcloud config set project <project-id>=           |
-
 ** GKE
-| Name                | Summary                                                    |
-|---------------------+------------------------------------------------------------|
-| Set kubectl context | =gcloud container clusters get-credentials <cluster-name>= |
-| Change region       | =gcloud config set compute/region us-west=                 |
-| Change zone         | =gcloud config set compute/zone us-west1-b=                |
-
+| Name                                    | Summary                                                    |
+|-----------------------------------------+------------------------------------------------------------|
+| Display a list of credentialed accounts | =gcloud auth list=                                         |
+| Set the active account                  | =gcloud config set account <ACCOUNT>=                      |
+| Set kubectl context                     | =gcloud container clusters get-credentials <cluster-name>= |
+| Change region                           | =gcloud config set compute/region us-west=                 |
+| Change zone                             | =gcloud config set compute/zone us-west1-b=                |
+| List all container clusters             | =gcloud container clusters list=                           |
 ** IAM
 | Name                                    | Summary                                                             |
 |-----------------------------------------+---------------------------------------------------------------------|
@@ -53,7 +53,6 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | Set the active account                  | =gcloud config set account <ACCOUNT>=                               |
 | Print token for active account          | =gcloud auth print-access-token=, =gcloud auth print-refresh-token= |
 | Revoke previous generated credential    | =gcloud auth <application-default> revoke=                          |
-  
 ** Bucket Basic
 | Name                       | Summary                                                                   |
 |----------------------------+---------------------------------------------------------------------------|
@@ -68,9 +67,7 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | Caculate file sha1sum      | =shasum syslog-migration-10.0.2.tgz=                                      |
 | Create bucket              | =gsutil mb gs://<bucket-name>=                                            |
 | Gsutil help                | =gsutil help=, =gsutil help cp=, =gsutil help options=                    |
-
-[[https://cloud.google.com/storage/docs/quickstart-gsutil][link: Quickstart: Using the gsutil Tool]]
-
+| Reference                  | [[https://cloud.google.com/storage/docs/quickstart-gsutil][link: Quickstart: Using the gsutil Tool]]                                   |
 ** Bucket Security
 | Name                    | Summary                                                                               |
 |-------------------------+---------------------------------------------------------------------------------------|
@@ -78,7 +75,6 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | Config auth             | =gsutil config -a=                                                                    |
 | Grant bucket access     | =gsutil iam ch user:denny@gmail.com:objectCreator,objectViewer gs://<bucket-name>=    |
 | Remove bucket access    | =gsutil iam ch -d user:denny@gmail.com:objectCreator,objectViewer gs://<bucket-name>= |
-
 ** VM
 | Name               | Summary                                                                                                   |
 |--------------------+-----------------------------------------------------------------------------------------------------------|
@@ -90,7 +86,6 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | SSH to instance    | =gcloud compute ssh --project "<project-name>" --zone "<zone-name>" "<instance-name>"=                    |
 | Download files     | =gcloud compute copy-files example-instance:~/REMOTE-DIR ~/LOCAL-DIR --zone us-central1-a=                |
 | Upload files       | =gcloud compute copy-files ~/LOCAL-FILE-1 example-instance:~/REMOTE-DIR --zone us-central1-a=             |
-
 ** Disks & Volumes
 | Name                | Summary                                                                        |
 |---------------------+--------------------------------------------------------------------------------|
@@ -98,7 +93,6 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | List all disk types | =gcloud compute disk-types list=                                               |
 | List all snapshots  | =gcloud compute snapshots list=                                                |
 | Create snapshot     | =gcloud compute disks snapshot <diskname> --snapshotname <name1> --zone $zone= |
-
 ** Network
 | Name                  | Summary                                                                             |
 |-----------------------+-------------------------------------------------------------------------------------|
@@ -112,13 +106,11 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | List all routes       | =gcloud compute routes list=                                                        |
 
 [[https://gist.github.com/aleccunningham/670115b2573be699b629954852b6598f][aleccunningham gist: vpn-setup.sh]]
-
 ** DNS
 | Name                               | Summary                                                 |
 |------------------------------------+---------------------------------------------------------|
 | List of all record-sets in my_zone | =gcloud dns record-sets list --zone my_zone=            |
 | List first 10 DNS records          | =gcloud dns record-sets list --zone my_zone --limit=10= |
-
 ** Firewall
 | Name                       | Summary                                                                                    |
 |----------------------------+--------------------------------------------------------------------------------------------|
@@ -127,26 +119,23 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | Describe one firewall rule | =gcloud compute firewall-rules describe <rule-name>=                                       |
 | Create one firewall rule   | =gcloud compute firewall-rules create my-rule --network default --allow tcp:9200 tcp:3306= |
 | Update one firewall rule   | =gcloud compute firewall-rules update default --network default --allow tcp:9200 tcp:9300= |
-
+** Images & Containers
+| Name                        | Summary                                                    |
+|-----------------------------+------------------------------------------------------------|
+| List all images             | =gcloud compute images list=                               |
+| List all container clusters | =gcloud container clusters list=                           |
+| Set kubectl context         | =gcloud container clusters get-credentials <cluster-name>= |
 ** RDS
 | Name                   | Summary                     |
 |------------------------+-----------------------------|
 | List all sql instances | =gcloud sql instances list= |
-
-** Images
-| Name            | Summary                      |
-|-----------------+------------------------------|
-| List all images | =gcloud compute images list= |
-
 ** Services
 | Name                               | Summary                                  |
 |------------------------------------+------------------------------------------|
 | List my backend services           | =gcloud compute backend-services list=   |
 | List all my health check endpoints | =gcloud compute http-health-checks list= |
 | List all URL maps                  | =gcloud compute url-maps list=           |
-
 ** cloudshell
-
 ** More Resources
 [[https://gist.github.com/kelseyhightower/61ce324db5639f95c77c686cc0d11fa5][kelseyhightower gist: create-global-lb.sh]]
 
@@ -163,8 +152,8 @@ License: Code is licensed under [[https://www.dennyzhang.com/wp-content/mit_lice
 #+END_HTML
 * org-mode configuration                                           :noexport:
 #+STARTUP: overview customtime noalign logdone showall
-#+DESCRIPTION: 
-#+KEYWORDS: 
+#+DESCRIPTION:
+#+KEYWORDS:
 #+LATEX_HEADER: \usepackage[margin=0.6in]{geometry}
 #+LaTeX_CLASS_OPTIONS: [8pt]
 #+LATEX_HEADER: \usepackage[english]{babel}
@@ -184,8 +173,8 @@ License: Code is licensed under [[https://www.dennyzhang.com/wp-content/mit_lice
 #+OPTIONS:   TeX:t LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+EXPORT_EXCLUDE_TAGS: exclude noexport
 #+SEQ_TODO: TODO HALF ASSIGN | DONE BYPASS DELEGATE CANCELED DEFERRED
-#+LINK_UP:   
-#+LINK_HOME: 
+#+LINK_UP:
+#+LINK_HOME:
 * TODO cloudshell                                                  :noexport:
 ** curl -sS https://get.k8s.io | bash error
 #+BEGIN_EXAMPLE
@@ -389,7 +378,6 @@ completion?
 
 Do you want to continue (Y/n)?
 #+END_EXAMPLE
-
 * gsutil parallel upload                                           :noexport:
 #+BEGIN_EXAMPLE
 
