@@ -25,7 +25,7 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 ** GCP Basic
 | Name                     | Summary                                                                  |
 |--------------------------+--------------------------------------------------------------------------|
-| Official Doc             | [[https://cloud.google.com/sdk/gcloud/reference/][link: gcloud reference]], [[https://cloud.google.com/storage/docs/gsutil][link: gsutil tool]]                                |
+| Official Doc             | [[https://cloud.google.com/sdk/gcloud/reference/][Link: gcloud reference]], [[https://cloud.google.com/storage/docs/gsutil][Link: gsutil tool]]                                |
 | Check version & settings | =gcloud version=, =gcloud info=, =gcloud components list=                |
 | Init profile             | =gcloud init= This might ask you to open an OpenID URL                   |
 | List all zones           | =gcloud compute zones list=                                              |
@@ -67,7 +67,7 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | Caculate file sha1sum      | =shasum syslog-migration-10.0.2.tgz=                                      |
 | Create bucket              | =gsutil mb gs://<bucket-name>=                                            |
 | Gsutil help                | =gsutil help=, =gsutil help cp=, =gsutil help options=                    |
-| Reference                  | [[https://cloud.google.com/storage/docs/quickstart-gsutil][link: Quickstart: Using the gsutil Tool]]                                   |
+| Reference                  | [[https://cloud.google.com/storage/docs/quickstart-gsutil][Link: Quickstart: Using the gsutil Tool]]                                   |
 ** Bucket Security
 | Name                    | Summary                                                                               |
 |-------------------------+---------------------------------------------------------------------------------------|
@@ -135,7 +135,6 @@ See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][
 | List my backend services           | =gcloud compute backend-services list=   |
 | List all my health check endpoints | =gcloud compute http-health-checks list= |
 | List all URL maps                  | =gcloud compute url-maps list=           |
-** cloudshell
 ** More Resources
 [[https://gist.github.com/kelseyhightower/61ce324db5639f95c77c686cc0d11fa5][kelseyhightower gist: create-global-lb.sh]]
 
@@ -424,3 +423,58 @@ https://gist.github.com/mingderwang/12b399100cdfad039f5e
  https://gist.github.com/frntn/838dbbbc857c6e3dc51e
 ** gcloud compute instances add-tags
 ** gcloud compute instances attach-disk
+* cloudshell                                                       :noexport:
+* #  --8<-------------------------- separator ------------------------>8-- :noexport:
+* TODO Blog: Experience with GKE                                   :noexport:
+** envs: GKE prometheus
+http://35.208.58.224/
+admin
+** DONE envs: ferran
+   CLOSED: [2018-10-08 Mon 15:35]
+use proxy 10.192.223.197:80
+
+prometheus: http://30.0.1.3:9090/graph
+
+grafana: http://30.0.1.5:3000/d/bosh_system_overview/bosh-system-overview?refresh=30s&orgId=1
+admin/3ziSDG9VzUPKjd2ruwbVfpG1puEBLZ
+** DONE RAM Overhead is around 500MB
+   CLOSED: [2018-10-07 Sun 17:32]
+** Mount docker socket file to pod
+** #  --8<-------------------------- separator ------------------------>8-- :noexport:
+** TODO Install lsof package in GKE worker vm: Container-Optimized OS (cos) OS image
+** You can't configure less than 3 worker nodes
+** cost evaluation
+** TODO For each k8s cluster, one master for me?
+** TODO Schedule workload for a given node pool on purpose
+* Blog: GKE Marketplace                                            :noexport:
+- click-to-deploy: https://github.com/GoogleCloudPlatform/click-to-deploy
+| Service       | Link                                                                                 |
+|---------------+--------------------------------------------------------------------------------------|
+| postgresql    | https://github.com/GoogleCloudPlatform/click-to-deploy/tree/master/k8s/postgresql    |
+| elasticsearch | https://github.com/GoogleCloudPlatform/click-to-deploy/tree/master/k8s/elasticsearch |
+| wordpress     | https://github.com/GoogleCloudPlatform/click-to-deploy/tree/master/k8s/wordpress     |
+| prometheus    | https://github.com/GoogleCloudPlatform/click-to-deploy/tree/master/k8s/prometheus    |
+
+- Similar marketplace products
+| Service          | Link                                |
+|------------------+-------------------------------------|
+| helm/chartmuseum | https://github.com/helm/chartmuseum |
+| kubeapps         | https://kubeapps.com/               |
+
+** DONE not using helm to implement it
+   CLOSED: [2018-10-19 Fri 09:57]
+** DONE Deleting application won't remove pv
+   CLOSED: [2018-10-19 Fri 10:35]
+** DONE Delete namespace takes more than 15 minutes
+   CLOSED: [2018-10-19 Fri 10:35]
+** DONE Very early stage
+   CLOSED: [2018-10-19 Fri 10:38]
+- No HA deployment
+- Don't support people to customize
+- No need to setup vhost: only one database instance
+- Export to service
+
+https://github.com/GoogleCloudPlatform/click-to-deploy/tree/master/k8s/wordpress#expose-wordpress-service-externally
+** TODO GKE application market compared with: k8s Operator, k8s helm
+** TODO workflow of marketplace
+- Choose flavor
