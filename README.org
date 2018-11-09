@@ -18,10 +18,9 @@
 
 - PDF Link: [[https://github.com/dennyzhang/cheatsheet-gcp-A4/blob/master/cheatsheet-gcp-A4.pdf][cheatsheet-gcp-A4.pdf]], Category: [[https://cheatsheet.dennyzhang.com/category/tools/][tools]]
 - Blog URL: https://cheatsheet.dennyzhang.com/cheatsheet-gcp-A4
+- Related posts: [[https://cheatsheet.dennyzhang.com/cheatsheet-openshift-A4][OpenShift CheatSheet]], [[https://cheatsheet.dennyzhang.com/cheatsheet-pks-A4][PKS CheatSheet]], [[https://github.com/topics/denny-cheatsheets][#denny-cheatsheets]]
 
 File me [[https://github.com/dennyzhang/cheatsheet-docker-A4/issues][Issues]] or star [[https://github.com/DennyZhang/cheatsheet-docker-A4][this repo]].
-
-See more CheatSheets from Denny: [[https://github.com/topics/denny-cheatsheets][#denny-cheatsheets]]
 ** GCP Basic
 | Name                     | Summary                                                                  |
 |--------------------------+--------------------------------------------------------------------------|
@@ -478,3 +477,21 @@ https://github.com/GoogleCloudPlatform/click-to-deploy/tree/master/k8s/wordpress
 ** TODO GKE application market compared with: k8s Operator, k8s helm
 ** TODO workflow of marketplace
 - Choose flavor
+* TODO gsutil cp with multiple part                                :noexport:
+#+BEGIN_EXAMPLE
+   /tmp  gsutil cp wavefront-proxy-0.9.0-dev.33.tgz gs://pks-releng-final-releases/wavefront-proxy-0.9.0-dev.33.tgz                                                                                                                  ✔ 0
+Copying file://wavefront-proxy-0.9.0-dev.33.tgz [Content-Type=application/x-tar]...
+==> NOTE: You are uploading one or more large file(s), which would run
+significantly faster if you enable parallel composite uploads. This
+feature can be enabled by editing the
+"parallel_composite_upload_threshold" value in your .boto
+configuration file. However, note that if you do this large files will
+be uploaded as `composite objects
+<https://cloud.google.com/storage/docs/composite-objects>`_,which
+means that any user who downloads such objects will need to have a
+compiled crcmod installed (see "gsutil help crcmod"). This is because
+without a compiled crcmod, computing checksums on composite objects is
+so slow that gsutil disables downloads of composite objects.
+
+- [0 files][116.5 MiB/450.2 MiB]   10.8 MiB/s
+#+END_EXAMPLE
