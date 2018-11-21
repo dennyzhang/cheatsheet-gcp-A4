@@ -18,7 +18,7 @@
 
 - PDF Link: [[https://github.com/dennyzhang/cheatsheet-gcp-A4/blob/master/cheatsheet-gcp-A4.pdf][cheatsheet-gcp-A4.pdf]], Category: [[https://cheatsheet.dennyzhang.com/category/tools/][tools]]
 - Blog URL: https://cheatsheet.dennyzhang.com/cheatsheet-gcp-A4
-- Related posts: [[https://cheatsheet.dennyzhang.com/cheatsheet-openshift-A4][OpenShift CheatSheet]], [[https://cheatsheet.dennyzhang.com/cheatsheet-pks-A4][PKS CheatSheet]], [[https://github.com/topics/denny-cheatsheets][#denny-cheatsheets]]
+- Related posts: [[https://cheatsheet.dennyzhang.com/cheatsheet-aws-A4][AWS CheatSheet]], [[https://cheatsheet.dennyzhang.com/cheatsheet-openshift-A4][OpenShift CheatSheet]], [[https://github.com/topics/denny-cheatsheets][#denny-cheatsheets]]
 
 File me [[https://github.com/dennyzhang/cheatsheet-docker-A4/issues][Issues]] or star [[https://github.com/DennyZhang/cheatsheet-docker-A4][this repo]].
 ** GCP Basic
@@ -173,6 +173,108 @@ License: Code is licensed under [[https://www.dennyzhang.com/wp-content/mit_lice
 #+SEQ_TODO: TODO HALF ASSIGN | DONE BYPASS DELEGATE CANCELED DEFERRED
 #+LINK_UP:
 #+LINK_HOME:
+* #  --8<-------------------------- separator ------------------------>8-- :noexport:
+* TODO gsutil cp with multiple part                                :noexport:
+#+BEGIN_EXAMPLE
+   /tmp  gsutil cp wavefront-proxy-0.9.0-dev.33.tgz gs://pks-releng-final-releases/wavefront-proxy-0.9.0-dev.33.tgz                                                                                                                  ✔ 0
+Copying file://wavefront-proxy-0.9.0-dev.33.tgz [Content-Type=application/x-tar]...
+==> NOTE: You are uploading one or more large file(s), which would run
+significantly faster if you enable parallel composite uploads. This
+feature can be enabled by editing the
+"parallel_composite_upload_threshold" value in your .boto
+configuration file. However, note that if you do this large files will
+be uploaded as `composite objects
+<https://cloud.google.com/storage/docs/composite-objects>`_,which
+means that any user who downloads such objects will need to have a
+compiled crcmod installed (see "gsutil help crcmod"). This is because
+without a compiled crcmod, computing checksums on composite objects is
+so slow that gsutil disables downloads of composite objects.
+
+- [0 files][116.5 MiB/450.2 MiB]   10.8 MiB/s
+#+END_EXAMPLE
+* TODO Add more gcloud commands                                    :noexport:
+** gcloud compute config-ssh                                       :noexport:
+ https://gist.github.com/frntn/838dbbbc857c6e3dc51e
+** gcloud compute instances add-tags
+** gcloud compute instances attach-disk
+* #  --8<-------------------------- separator ------------------------>8-- :noexport:
+* TODO How to clean up everything inside one project?              :noexport:
+* setup gke manually                                               :noexport:
+** kube-up.sh error
+#+BEGIN_EXAMPLE
+denny_zhang001@cloudshell:~/kubernetes (denny-k8s-test1)$ ./cluster/kube-up.sh
+... Starting cluster in us-central1-b using provider gce
+... calling verify-prereqs
+... calling verify-kube-binaries
+!!! kubectl appears to be broken or missing
+Required release artifacts appear to be missing. Do you wish to download them? [Y/n]
+Y
+Can't determine Kubernetes release.
+/home/denny_zhang001/kubernetes/cluster/get-kube-binaries.sh should only be run from a prebuilt Kubernetes release.
+Did you mean to use get-kube.sh instead?
+#+END_EXAMPLE
+* DONE gcloud init                                                 :noexport:
+  CLOSED: [2018-09-07 Fri 11:13]
+https://cloud.google.com/sdk/docs/quickstart-macos
+#+BEGIN_EXAMPLE
+  /Users/zdenny/Downloads/google-cloud-sdk  ./install.sh                                                                                     ✘ 127
+Welcome to the Google Cloud SDK!
+
+To help improve the quality of this product, we collect anonymized usage data
+and anonymized stacktraces when crashes are encountered; additional information
+is available at <https://cloud.google.com/sdk/usage-statistics>. You may choose
+to opt out of this collection now (by choosing 'N' at the below prompt), or at
+any time in the future by running the following command:
+
+    gcloud config set disable_usage_reporting true
+
+Do you want to help improve the Google Cloud SDK (Y/n)?  n
+
+
+Your current Cloud SDK version is: 210.0.0
+The latest available version is: 210.0.0
+
+┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                                  Components                                                 │
+├───────────────┬──────────────────────────────────────────────────────┬──────────────────────────┬───────────┤
+│     Status    │                         Name                         │            ID            │    Size   │
+├───────────────┼──────────────────────────────────────────────────────┼──────────────────────────┼───────────┤
+│ Not Installed │ App Engine Go Extensions                             │ app-engine-go            │ 152.8 MiB │
+│ Not Installed │ Cloud Bigtable Command Line Tool                     │ cbt                      │   4.8 MiB │
+│ Not Installed │ Cloud Bigtable Emulator                              │ bigtable                 │   4.3 MiB │
+│ Not Installed │ Cloud Datalab Command Line Tool                      │ datalab                  │   < 1 MiB │
+│ Not Installed │ Cloud Datastore Emulator                             │ cloud-datastore-emulator │  17.4 MiB │
+│ Not Installed │ Cloud Datastore Emulator (Legacy)                    │ gcd-emulator             │  38.1 MiB │
+│ Not Installed │ Cloud Pub/Sub Emulator                               │ pubsub-emulator          │  33.4 MiB │
+│ Not Installed │ Cloud SQL Proxy                                      │ cloud_sql_proxy          │   2.5 MiB │
+│ Not Installed │ Emulator Reverse Proxy                               │ emulator-reverse-proxy   │  14.5 MiB │
+│ Not Installed │ Google Cloud Build Local Builder                     │ cloud-build-local        │   4.4 MiB │
+│ Not Installed │ Google Container Local Builder                       │ container-builder-local  │   4.4 MiB │
+│ Not Installed │ Google Container Registry's Docker credential helper │ docker-credential-gcr    │   1.8 MiB │
+│ Not Installed │ gcloud Alpha Commands                                │ alpha                    │   < 1 MiB │
+│ Not Installed │ gcloud Beta Commands                                 │ beta                     │   < 1 MiB │
+│ Not Installed │ gcloud app Java Extensions                           │ app-engine-java          │ 118.6 MiB │
+│ Not Installed │ gcloud app PHP Extensions                            │ app-engine-php           │  21.9 MiB │
+│ Not Installed │ gcloud app Python Extensions                         │ app-engine-python        │   6.1 MiB │
+│ Not Installed │ gcloud app Python Extensions (Extra Libraries)       │ app-engine-python-extras │  28.5 MiB │
+│ Not Installed │ kubectl                                              │ kubectl                  │  14.8 MiB │
+│ Installed     │ BigQuery Command Line Tool                           │ bq                       │   < 1 MiB │
+│ Installed     │ Cloud SDK Core Libraries                             │ core                     │   8.2 MiB │
+│ Installed     │ Cloud Storage Command Line Tool                      │ gsutil                   │   3.5 MiB │
+└───────────────┴──────────────────────────────────────────────────────┴──────────────────────────┴───────────┘
+To install or remove components at your current SDK version [210.0.0], run:
+  $ gcloud components install COMPONENT_ID
+  $ gcloud components remove COMPONENT_ID
+
+To update your SDK installation to the latest version [210.0.0], run:
+  $ gcloud components update
+
+
+Modify profile to update your $PATH and enable shell command
+completion?
+
+Do you want to continue (Y/n)?
+#+END_EXAMPLE
 * TODO cloudshell                                                  :noexport:
 ** curl -sS https://get.k8s.io | bash error
 #+BEGIN_EXAMPLE
@@ -299,83 +401,6 @@ Last output from querying API server follows:
                                  Dload  Upload   Total   Spent    Left  Speed
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (7) Failed to connect to 35.202.25.117 port 443: Connection refused
 #+END_EXAMPLE
-* setup gke manually                                               :noexport:
-** kube-up.sh error
-#+BEGIN_EXAMPLE
-denny_zhang001@cloudshell:~/kubernetes (denny-k8s-test1)$ ./cluster/kube-up.sh
-... Starting cluster in us-central1-b using provider gce
-... calling verify-prereqs
-... calling verify-kube-binaries
-!!! kubectl appears to be broken or missing
-Required release artifacts appear to be missing. Do you wish to download them? [Y/n]
-Y
-Can't determine Kubernetes release.
-/home/denny_zhang001/kubernetes/cluster/get-kube-binaries.sh should only be run from a prebuilt Kubernetes release.
-Did you mean to use get-kube.sh instead?
-#+END_EXAMPLE
-* TODO How to clean up everything inside one project?              :noexport:
-* DONE gcloud init                                                 :noexport:
-  CLOSED: [2018-09-07 Fri 11:13]
-https://cloud.google.com/sdk/docs/quickstart-macos
-#+BEGIN_EXAMPLE
-  /Users/zdenny/Downloads/google-cloud-sdk  ./install.sh                                                                                     ✘ 127
-Welcome to the Google Cloud SDK!
-
-To help improve the quality of this product, we collect anonymized usage data
-and anonymized stacktraces when crashes are encountered; additional information
-is available at <https://cloud.google.com/sdk/usage-statistics>. You may choose
-to opt out of this collection now (by choosing 'N' at the below prompt), or at
-any time in the future by running the following command:
-
-    gcloud config set disable_usage_reporting true
-
-Do you want to help improve the Google Cloud SDK (Y/n)?  n
-
-
-Your current Cloud SDK version is: 210.0.0
-The latest available version is: 210.0.0
-
-┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                                  Components                                                 │
-├───────────────┬──────────────────────────────────────────────────────┬──────────────────────────┬───────────┤
-│     Status    │                         Name                         │            ID            │    Size   │
-├───────────────┼──────────────────────────────────────────────────────┼──────────────────────────┼───────────┤
-│ Not Installed │ App Engine Go Extensions                             │ app-engine-go            │ 152.8 MiB │
-│ Not Installed │ Cloud Bigtable Command Line Tool                     │ cbt                      │   4.8 MiB │
-│ Not Installed │ Cloud Bigtable Emulator                              │ bigtable                 │   4.3 MiB │
-│ Not Installed │ Cloud Datalab Command Line Tool                      │ datalab                  │   < 1 MiB │
-│ Not Installed │ Cloud Datastore Emulator                             │ cloud-datastore-emulator │  17.4 MiB │
-│ Not Installed │ Cloud Datastore Emulator (Legacy)                    │ gcd-emulator             │  38.1 MiB │
-│ Not Installed │ Cloud Pub/Sub Emulator                               │ pubsub-emulator          │  33.4 MiB │
-│ Not Installed │ Cloud SQL Proxy                                      │ cloud_sql_proxy          │   2.5 MiB │
-│ Not Installed │ Emulator Reverse Proxy                               │ emulator-reverse-proxy   │  14.5 MiB │
-│ Not Installed │ Google Cloud Build Local Builder                     │ cloud-build-local        │   4.4 MiB │
-│ Not Installed │ Google Container Local Builder                       │ container-builder-local  │   4.4 MiB │
-│ Not Installed │ Google Container Registry's Docker credential helper │ docker-credential-gcr    │   1.8 MiB │
-│ Not Installed │ gcloud Alpha Commands                                │ alpha                    │   < 1 MiB │
-│ Not Installed │ gcloud Beta Commands                                 │ beta                     │   < 1 MiB │
-│ Not Installed │ gcloud app Java Extensions                           │ app-engine-java          │ 118.6 MiB │
-│ Not Installed │ gcloud app PHP Extensions                            │ app-engine-php           │  21.9 MiB │
-│ Not Installed │ gcloud app Python Extensions                         │ app-engine-python        │   6.1 MiB │
-│ Not Installed │ gcloud app Python Extensions (Extra Libraries)       │ app-engine-python-extras │  28.5 MiB │
-│ Not Installed │ kubectl                                              │ kubectl                  │  14.8 MiB │
-│ Installed     │ BigQuery Command Line Tool                           │ bq                       │   < 1 MiB │
-│ Installed     │ Cloud SDK Core Libraries                             │ core                     │   8.2 MiB │
-│ Installed     │ Cloud Storage Command Line Tool                      │ gsutil                   │   3.5 MiB │
-└───────────────┴──────────────────────────────────────────────────────┴──────────────────────────┴───────────┘
-To install or remove components at your current SDK version [210.0.0], run:
-  $ gcloud components install COMPONENT_ID
-  $ gcloud components remove COMPONENT_ID
-
-To update your SDK installation to the latest version [210.0.0], run:
-  $ gcloud components update
-
-
-Modify profile to update your $PATH and enable shell command
-completion?
-
-Do you want to continue (Y/n)?
-#+END_EXAMPLE
 * gsutil parallel upload                                           :noexport:
 #+BEGIN_EXAMPLE
 
@@ -417,13 +442,6 @@ https://gist.github.com/mingderwang/12b399100cdfad039f5e
  9979  gcloud alpha container kubectl create -f wordpress.json
  9982  gcloud alpha container kubectl create -f wordpress.json
  9983  gcloud alpha container kubectl get po
-* TODO Add more gcloud commands                                    :noexport:
-** gcloud compute config-ssh                                       :noexport:
- https://gist.github.com/frntn/838dbbbc857c6e3dc51e
-** gcloud compute instances add-tags
-** gcloud compute instances attach-disk
-* cloudshell                                                       :noexport:
-* #  --8<-------------------------- separator ------------------------>8-- :noexport:
 * TODO Blog: Experience with GKE                                   :noexport:
 ** envs: GKE prometheus
 http://35.208.58.224/
@@ -477,21 +495,6 @@ https://github.com/GoogleCloudPlatform/click-to-deploy/tree/master/k8s/wordpress
 ** TODO GKE application market compared with: k8s Operator, k8s helm
 ** TODO workflow of marketplace
 - Choose flavor
-* TODO gsutil cp with multiple part                                :noexport:
-#+BEGIN_EXAMPLE
-   /tmp  gsutil cp wavefront-proxy-0.9.0-dev.33.tgz gs://pks-releng-final-releases/wavefront-proxy-0.9.0-dev.33.tgz                                                                                                                  ✔ 0
-Copying file://wavefront-proxy-0.9.0-dev.33.tgz [Content-Type=application/x-tar]...
-==> NOTE: You are uploading one or more large file(s), which would run
-significantly faster if you enable parallel composite uploads. This
-feature can be enabled by editing the
-"parallel_composite_upload_threshold" value in your .boto
-configuration file. However, note that if you do this large files will
-be uploaded as `composite objects
-<https://cloud.google.com/storage/docs/composite-objects>`_,which
-means that any user who downloads such objects will need to have a
-compiled crcmod installed (see "gsutil help crcmod"). This is because
-without a compiled crcmod, computing checksums on composite objects is
-so slow that gsutil disables downloads of composite objects.
-
-- [0 files][116.5 MiB/450.2 MiB]   10.8 MiB/s
-#+END_EXAMPLE
+* TODO [#A] doc: how much it cost to download 10GB data from GCP bucket? :noexport:
+* TODO [#A] Try GCP stack-driver                                   :noexport:
+* TODO GKE On-Prem: https://cloud.google.com/gke-on-prem/          :noexport:
