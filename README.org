@@ -20,16 +20,32 @@
 - Blog URL: https://cheatsheet.dennyzhang.com/cheatsheet-gcp-A4
 - Related posts: [[https://cheatsheet.dennyzhang.com/cheatsheet-aws-A4][AWS CheatSheet]], [[https://cheatsheet.dennyzhang.com/cheatsheet-openshift-A4][OpenShift CheatSheet]], [[https://github.com/topics/denny-cheatsheets][#denny-cheatsheets]]
 
-File me [[https://github.com/dennyzhang/cheatsheet-docker-A4/issues][Issues]] or star [[https://github.com/DennyZhang/cheatsheet-docker-A4][this repo]].
+File me [[https://github.com/dennyzhang/cheatsheet-gcp-A4/issues][Issues]] or star [[https://github.com/dennyzhang/cheatsheet-gcp-A4][this repo]].
 ** GCP Basic
 | Name                     | Summary                                                                  |
 |--------------------------+--------------------------------------------------------------------------|
 | Official Doc             | [[https://cloud.google.com/sdk/gcloud/reference/][Link: gcloud reference]], [[https://cloud.google.com/storage/docs/gsutil][Link: gsutil tool]]                                |
-| Installation             | [[https://cloud.google.com/sdk/docs/quickstart-linux][Link: Install gcloud]], [[https://cloud.google.com/storage/docs/gsutil_install][Link: Install gsutil]]                               |
+| gsutil installation      | [[https://cloud.google.com/storage/docs/gsutil/addlhelp/CRC32CandInstallingcrcmod#debian-and-ubuntu][Link: install crcmod]], [[https://cloud.google.com/storage/docs/gsutil_install][Link: Install gsutil]]                               |
+| Installation             | [[https://cloud.google.com/sdk/docs/quickstart-linux][Link: Install gcloud]]                                                     |
 | Check version & settings | =gcloud version=, =gcloud info=, =gcloud components list=                |
-| Init profile             | =gcloud init= This might ask you to open an OpenID URL                   |
+| Init profile             | =gcloud init= This will ask you to open an OpenID URL                    |
 | List all zones           | =gcloud compute zones list=                                              |
 | Upgrade local SDK        | =gcloud components update=, =gcloud components update --version 219.0.1= |
+** Bucket Basic
+| Name                       | Summary                                                                      |
+|----------------------------+------------------------------------------------------------------------------|
+| List all buckets and files | =gsutil ls=, =gsutil ls -lh gs://<bucket-name>=                              |
+| Download file              | =gsutil cp gs://<bucket-name>/<dir-path>/package-1.1.tgz .=                  |
+| Upload file                | =gsutil cp <filename> gs://<bucket-name>/<directory>/=                       |
+| Cat file                   | =gsutil cat gs://<bucket-name>/<filepath>/=                                  |
+| Delete file                | =gsutil rm gs://<bucket-name>/<filepath>=                                    |
+| Move file                  | =gsutil mv <src-filepath> gs://<bucket-name>/<directory>/<dest-filepath>=    |
+| Copy folder                | =gsutil cp -r ./conf gs://<bucket-name>/=                                    |
+| Show disk usage            | =gsutil du -h gs://<bucket-name/<directory>=                                 |
+| Create bucket              | =gsutil mb gs://<bucket-name>=                                               |
+| Caculate file sha1sum      | =gsha1sum syslog-migration-10.0.2.tgz=, =shasum syslog-migration-10.0.2.tgz= |
+| Gsutil help                | =gsutil help=, =gsutil help cp=, =gsutil help options=                       |
+| Reference                  | [[https://cloud.google.com/storage/docs/quickstart-gsutil][Link: Quickstart: Using the gsutil Tool]]                                      |
 ** GCP Project
 | Name              | Summary                                            |
 |-------------------+----------------------------------------------------|
@@ -51,23 +67,9 @@ File me [[https://github.com/dennyzhang/cheatsheet-docker-A4/issues][Issues]] or
 | Authenticate client                     | =gcloud auth activate-service-account --key-file <key-file>=        |
 | Display a list of credentialed accounts | =gcloud auth list=                                                  |
 | Set the active account                  | =gcloud config set account <ACCOUNT>=                               |
+| [[https://cloud.google.com/sdk/gcloud/reference/auth/configure-docker][Auth to GCP Container Registry]]          | =gcloud auth configure-docker=                                      |
 | Print token for active account          | =gcloud auth print-access-token=, =gcloud auth print-refresh-token= |
 | Revoke previous generated credential    | =gcloud auth <application-default> revoke=                          |
-** Bucket Basic
-| Name                       | Summary                                                                   |
-|----------------------------+---------------------------------------------------------------------------|
-| List all buckets and files | =gsutil ls=, =gsutil ls -lh gs://<bucket-name>=                           |
-| Download file              | =gsutil cp gs://<bucket-name>/<dir-path>/package-1.1.tgz .=               |
-| Upload file                | =gsutil cp <filename> gs://<bucket-name>/<directory>/=                    |
-| Cat file                   | =gsutil cat gs://<bucket-name>/<filepath>/=                               |
-| Delete file                | =gsutil rm gs://<bucket-name>/<filepath>=                                 |
-| Move file                  | =gsutil mv <src-filepath> gs://<bucket-name>/<directory>/<dest-filepath>= |
-| Copy folder                | =gsutil cp -r ./conf gs://<bucket-name>/=                                 |
-| Show disk usage            | =gsutil du -h gs://<bucket-name/<directory>=                              |
-| Caculate file sha1sum      | =shasum syslog-migration-10.0.2.tgz=                                      |
-| Create bucket              | =gsutil mb gs://<bucket-name>=                                            |
-| Gsutil help                | =gsutil help=, =gsutil help cp=, =gsutil help options=                    |
-| Reference                  | [[https://cloud.google.com/storage/docs/quickstart-gsutil][Link: Quickstart: Using the gsutil Tool]]                                   |
 ** Bucket Security
 | Name                    | Summary                                                                               |
 |-------------------------+---------------------------------------------------------------------------------------|
@@ -75,6 +77,9 @@ File me [[https://github.com/dennyzhang/cheatsheet-docker-A4/issues][Issues]] or
 | Config auth             | =gsutil config -a=                                                                    |
 | Grant bucket access     | =gsutil iam ch user:denny@gmail.com:objectCreator,objectViewer gs://<bucket-name>=    |
 | Remove bucket access    | =gsutil iam ch -d user:denny@gmail.com:objectCreator,objectViewer gs://<bucket-name>= |
+#+BEGIN_HTML
+<a href="https://cheatsheet.dennyzhang.com"><img align="right" width="185" height="37" src="https://raw.githubusercontent.com/dennyzhang/cheatsheet.dennyzhang.com/master/images/cheatsheet_dns.png"></a>
+#+END_HTML
 ** VM
 | Name               | Summary                                                                                                   |
 |--------------------+-----------------------------------------------------------------------------------------------------------|
@@ -104,8 +109,7 @@ File me [[https://github.com/dennyzhang/cheatsheet-docker-A4/issues][Issues]] or
 | List all ip addresses | =gcloud compute addresses list=                                                     |
 | Describe ip address   | =gcloud compute addresses describe <ip-name> --region us-central1=                  |
 | List all routes       | =gcloud compute routes list=                                                        |
-
-[[https://gist.github.com/aleccunningham/670115b2573be699b629954852b6598f][aleccunningham gist: vpn-setup.sh]]
+| Reference             | [[https://gist.github.com/aleccunningham/670115b2573be699b629954852b6598f][aleccunningham gist: vpn-setup.sh]]                                                   |
 ** DNS
 | Name                               | Summary                                                 |
 |------------------------------------+---------------------------------------------------------|
@@ -142,8 +146,8 @@ File me [[https://github.com/dennyzhang/cheatsheet-docker-A4/issues][Issues]] or
 
 License: Code is licensed under [[https://www.dennyzhang.com/wp-content/mit_license.txt][MIT License]].
 #+BEGIN_HTML
-<a href="https://www.dennyzhang.com"><img align="right" width="201" height="268" src="https://raw.githubusercontent.com/USDevOps/mywechat-slack-group/master/images/denny_201706.png"></a>
-<a href="https://www.dennyzhang.com"><img align="right" src="https://raw.githubusercontent.com/USDevOps/mywechat-slack-group/master/images/dns_small.png"></a>
+<a href="https://cheatsheet.dennyzhang.com"><img align="right" width="201" height="268" src="https://raw.githubusercontent.com/USDevOps/mywechat-slack-group/master/images/denny_201706.png"></a>
+<a href="https://cheatsheet.dennyzhang.com"><img align="right" src="https://raw.githubusercontent.com/dennyzhang/cheatsheet.dennyzhang.com/master/images/cheatsheet_dns.png"></a>
 
 <a href="https://www.linkedin.com/in/dennyzhang001"><img align="bottom" src="https://www.dennyzhang.com/wp-content/uploads/sns/linkedin.png" alt="linkedin" /></a>
 <a href="https://github.com/dennyzhang"><img align="bottom"src="https://www.dennyzhang.com/wp-content/uploads/sns/github.png" alt="github" /></a>
@@ -163,7 +167,7 @@ License: Code is licensed under [[https://www.dennyzhang.com/wp-content/mit_lice
 #+LATEX_HEADER: \rhead{Updated: \today}
 #+LATEX_HEADER: \rfoot{\thepage\ of \pageref{LastPage}}
 #+LATEX_HEADER: \lfoot{\href{https://github.com/dennyzhang/cheatsheet-gcp-A4}{GitHub: https://github.com/dennyzhang/cheatsheet-gcp-A4}}
-#+LATEX_HEADER: \lhead{\href{https://cheatsheet.dennyzhang.com/cheatsheet-slack-A4}{Blog URL: https://cheatsheet.dennyzhang.com/cheatsheet-gcp-A4}}
+#+LATEX_HEADER: \lhead{\href{https://cheatsheet.dennyzhang.com/cheatsheet-gcp-A4}{Blog URL: https://cheatsheet.dennyzhang.com/cheatsheet-gcp-A4}}
 #+AUTHOR: Denny Zhang
 #+EMAIL:  denny@dennyzhang.com
 #+TAGS: noexport(n)
@@ -502,3 +506,4 @@ https://github.com/GoogleCloudPlatform/click-to-deploy/tree/master/k8s/wordpress
 * #  --8<-------------------------- separator ------------------------>8-- :noexport:
 * TODO [#A] grant vmware bucket access to a key                    :noexport:
 * TODO https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/infrastructure-as-a-service/cloud-services-compute/google-compute-engine-cheat-sheet :noexport:
+* TODO GCP the only public cloud to support VM live migration      :noexport:
